@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CalendarPlease</string>
+    <string name="exception_message">must implement OnFragmentInteractionListener</string>
+</resources>
