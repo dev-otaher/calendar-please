@@ -6,4 +6,76 @@
     android:layout_height="match_parent"
     tools:context=".NewCalendarActivity">
 
+    <TextView
+        android:id="@+id/textView_calendar_name3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="75dp"
+        android:text="@string/syllabus_es"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_start_date" />
+
+    <EditText
+        android:id="@+id/editText_calendar_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:hint="@string/calendar_name"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_start_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:enabled="false"
+        android:hint="@string/school_start_date"
+        android:inputType="date"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@+id/button_show_date_dialog"
+        app:layout_constraintStart_toStartOf="@+id/editText_calendar_name"
+        app:layout_constraintTop_toBottomOf="@+id/editText_calendar_name" />
+
+    <Button
+        android:id="@+id/button_run"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/run"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_start_date" />
+
+    <ImageButton
+        android:id="@+id/button_show_date_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_start_date"
+        app:layout_constraintEnd_toEndOf="@+id/editText_calendar_name"
+        app:layout_constraintTop_toTopOf="@+id/editText_start_date"
+        app:srcCompat="@drawable/ic_calendar"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="com.example.calendarplease.UploadedFilesFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_calendar_name3"
+        tools:layout="@layout/fragment_uploaded_files" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

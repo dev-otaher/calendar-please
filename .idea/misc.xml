@@ -4,7 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.3546875" />
+        <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/drawable/ic_calendar.xml" value="0.3546875" />
         <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/layout/activity_main.xml" value="0.31666666666666665" />
+        <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/layout/activity_new_calendar.xml" value="0.33" />
+        <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/layout/filelist_item.xml" value="0.33" />
+        <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/layout/fragment_uploaded_files.xml" value="0.334375" />
+        <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/menu/menu_main.xml" value="0.334375" />
         <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.19791666666666666" />
       </map>
