@@ -19,7 +19,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileVi
 
     private List<String> mUploadedFilesPathList;
 
-    public static int DOC_REQUEST = 100;
+//    public static int DOC_REQUEST = 100;
 
     private final LayoutInflater mInflater;
 
@@ -28,7 +28,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileVi
     class FileViewHolder extends RecyclerView.ViewHolder {
         public final TextView textViewCounter;
         public final EditText editTextFilePath;
-        public final ImageButton buttonBrowse;
+//        public final ImageButton buttonBrowse;
         public final ImageButton buttonDelete;
 
         final FileListAdapter mAdapter;
@@ -37,7 +37,6 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileVi
             super(itemView);
             textViewCounter = itemView.findViewById(R.id.textView_counter);
             editTextFilePath = itemView.findViewById(R.id.editText_file_path);
-            buttonBrowse = itemView.findViewById(R.id.button_browse);
             buttonDelete = itemView.findViewById(R.id.button_delete);
             this.mAdapter = adapter;
         }
@@ -61,15 +60,15 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileVi
     public void onBindViewHolder(@NonNull FileListAdapter.FileViewHolder holder, int position) {
         holder.textViewCounter.setText((position + 1) + ")");
         holder.editTextFilePath.setText(this.mUploadedFilesPathList.get(position));
-        holder.buttonBrowse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.setType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
-                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
-                ((Activity) mContext).startActivityForResult(intent, DOC_REQUEST);
-            }
-        });
+//        holder.buttonBrowse.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+//                intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+//                ((Activity) mContext).startActivityForResult(intent, DOC_REQUEST);
+//            }
+//        });
 //        holder.buttonDelete.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

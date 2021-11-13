@@ -76,13 +76,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="470dp"
+        android:layout_height="400dp"
         android:backgroundTint="@color/teal_200"
-        android:padding="5dp"
         android:scrollbars="vertical" />
 
     <ImageButton
-        android:id="@+id/button_run"
+        android:id="@+id/button_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
