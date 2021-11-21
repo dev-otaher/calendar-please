@@ -6,14 +6,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/textView_counter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1."
-        android:layout_weight="1"
-        android:textSize="20sp" />
-
     <EditText
         android:id="@+id/editText_file_path"
         android:layout_width="wrap_content"

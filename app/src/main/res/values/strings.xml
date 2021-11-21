@@ -7,4 +7,6 @@
     <string name="school_start_date">School Start Date</string>
     <string name="run">Run</string>
     <string name="cal_name_placeholder">Calendar%1$d</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

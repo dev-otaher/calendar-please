@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,84 +10,27 @@
     android:padding="10dp"
     tools:context=".NewCalendarActivity">
 
-    <EditText
-        android:id="@+id/editText_calendar_name"
+    <FrameLayout
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/calendar_name"
-        android:inputType="textPersonName"
-        android:minHeight="48dp" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearlayout_datepicker"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/editText_start_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:hint="@string/school_start_date"
-            android:inputType="date"
-            android:minHeight="48dp" />
-
-        <ImageButton
-            android:id="@+id/button_show_date_dialog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="5"
-            android:backgroundTint="@color/design_default_color_primary"
-            android:minHeight="48dp"
-            app:srcCompat="@drawable/ic_calendar"
-            tools:ignore="SpeakableTextPresentCheck" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView_calendar_name3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/syllabus_es"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/button_add_file_path"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="false"
-            android:backgroundTint="@color/design_default_color_primary"
-            android:cropToPadding="false"
-            android:src="@drawable/ic_add" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:backgroundTint="@color/teal_200"
-        android:scrollbars="vertical" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/button_next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/button_next"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:backgroundTint="@color/design_default_color_primary"
+        android:minHeight="48dp"
         android:src="@drawable/ic_next"
-        android:text="@string/run" />
+        android:text="@string/run"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>
