@@ -1,6 +1,7 @@
 package com.example.calendarplease;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,40 +10,43 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.LinkedList;
+import java.util.List;
 
-public class AvailableColumnsAdapter extends RecyclerView.Adapter<AvailableColumnsAdapter.AvailableColumnsViewHolder> {
+public class AvailableColumnsAdapter extends RecyclerView.Adapter<AvailableColumnsAdapter.SyllabusColumnViewHolder> {
 
-    private final LinkedList<String> mColumnList;
     private LayoutInflater mInflater;
+    private List<SyllabusDocument> mSyllabusDocumentList;
 
-    public AvailableColumnsAdapter(Context context, LinkedList<String> columnList) {
+    public AvailableColumnsAdapter(Context context, List<SyllabusDocument> syllabusDocumentList) {
         mInflater = LayoutInflater.from(context);
-        this.mColumnList = columnList;
+        this.mSyllabusDocumentList = syllabusDocumentList;
     }
 
     @NonNull
     @Override
-    public AvailableColumnsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SyllabusColumnViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View mItemView = mInflater.inflate(R.layout.available_columns_item, parent, false);
-        return new AvailableColumnsViewHolder(mItemView, this);
+        return new SyllabusColumnViewHolder(mItemView, this);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AvailableColumnsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SyllabusColumnViewHolder holder, int position) {
+        Log.d("meow", "onBindViewHolder");
+        SyllabusDocument currentSyllabus = mSyllabusDocumentList.get(position);
+
 
     }
 
     @Override
     public int getItemCount() {
-        return mColumnList.size();
+        return mSyllabusDocumentList.size();
     }
 
-    class AvailableColumnsViewHolder extends RecyclerView.ViewHolder {
-        private final TextView columnTitleTextView;
-        private final AvailableColumnsAdapter mAdapter;
+    class SyllabusColumnViewHolder extends RecyclerView.ViewHolder {
+        public final TextView columnTitleTextView;
+        final AvailableColumnsAdapter mAdapter;
 
-        public AvailableColumnsViewHolder(View itemView, AvailableColumnsAdapter adapter) {
+        public SyllabusColumnViewHolder(View itemView, AvailableColumnsAdapter adapter) {
             super(itemView);
             columnTitleTextView = itemView.findViewById(R.id.column_title);
             mAdapter = adapter;

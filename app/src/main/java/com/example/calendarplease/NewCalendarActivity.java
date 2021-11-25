@@ -2,6 +2,7 @@ package com.example.calendarplease;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.util.Log;
 import android.widget.ImageButton;
 
@@ -14,6 +15,7 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +46,6 @@ public class NewCalendarActivity extends AppCompatActivity {
             fragmentTransaction2.replace(R.id.fragment_container, secondStepFragment).commit();
 
 //            if (this.uploadedFilesPathList.size() != 0) {
-
 //                List<VEvent> schoolEvents = new ArrayList<>();
 //                for (ParcelFileDescriptor p : fileDescriptors) {
 //                    try {
@@ -88,10 +89,18 @@ public class NewCalendarActivity extends AppCompatActivity {
                 if (!isPathExist(filePath)) {
                     SyllabusDocument syllabusDocument = new SyllabusDocument();
                     syllabusDocument.setPath(filePath);
+                    syllabusDocument.uri = data.getData();
                     schoolCalendar.getSyllabusDocumentList().add(syllabusDocument);
                     int size = schoolCalendar.getSyllabusDocumentList().size();
                     firstStepFragment.getRecyclerView().getAdapter().notifyItemInserted(size);
                     firstStepFragment.getRecyclerView().smoothScrollToPosition(size);
+
+//                    try {
+//                        ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(data.getData(), "r");
+//                        Log.d("meow2", "================" + getContentResolver().toString());
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.example.calendarplease;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,6 +39,13 @@ public class SecondStepFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("meow2", "1111111111111111" + getActivity().getContentResolver().toString());
+        mSyllabusDocumentList.get(0).setContentResolver(getActivity().getContentResolver());
+        Hashtable<Integer, String> prefColumns = mSyllabusDocumentList.get(0).fetchWcoHeaderColumns();
+        prefColumns.forEach((integer, s) -> {
+            Log.d("meow", integer + ". " + s);
+        });
+
     }
 
     @Override
@@ -45,7 +54,7 @@ public class SecondStepFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_second_step, container, false);
         mRecyclerView = root.findViewById(R.id.column_recyclerview);
-        mAdapter = new AvailableColumnsAdapter(getContext(), new LinkedList<>());
+        mAdapter = new AvailableColumnsAdapter(getContext(), this.mSyllabusDocumentList);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return root;

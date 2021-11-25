@@ -9,6 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/column_recyclerview">
+        android:id="@+id/column_recyclerview"
+        tools:listitem="@layout/available_columns_item">
     </androidx.recyclerview.widget.RecyclerView>
 </FrameLayout>

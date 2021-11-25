@@ -35,8 +35,6 @@ public class FirstStepFragment extends Fragment {
     // TODO: Rename and change types of parameters
 
     private SchoolCalendar mSchoolCalendar;
-//    private List<String> mUploadedFilesPathList;
-//    private List<ParcelFileDescriptor> mFileDescriptors;
 
     public FirstStepFragment() {
         // Required empty public constructor
