@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Hashtable;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -39,13 +38,6 @@ public class SecondStepFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("meow2", "1111111111111111" + getActivity().getContentResolver().toString());
-        mSyllabusDocumentList.get(0).setContentResolver(getActivity().getContentResolver());
-        Hashtable<Integer, String> prefColumns = mSyllabusDocumentList.get(0).fetchWcoHeaderColumns();
-        prefColumns.forEach((integer, s) -> {
-            Log.d("meow", integer + ". " + s);
-        });
-
     }
 
     @Override

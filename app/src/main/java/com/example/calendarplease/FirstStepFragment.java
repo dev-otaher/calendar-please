@@ -24,15 +24,10 @@ import java.util.Locale;
  */
 public class FirstStepFragment extends Fragment {
     public static final int BROWSE_DOC_REQUEST = 100;
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String UPLOADED_FILES_PATH_LIST = "UPLOADED_FILES_PATH_LIST";
-    private static final String FILE_DESCRIPTORS = "FILE_DESCRIPTORS";
 
     private EditText mCalendarName;
     private EditText mStartDate;
     private RecyclerView mRecyclerView;
-    // TODO: Rename and change types of parameters
 
     private SchoolCalendar mSchoolCalendar;
 
@@ -91,6 +86,12 @@ public class FirstStepFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        mSchoolCalendar.setTitle(mCalendarName.getText().toString());
+        super.onDestroyView();
     }
 
     public RecyclerView getRecyclerView() {

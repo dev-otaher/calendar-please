@@ -6,24 +6,32 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/editText_file_path"
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textView_file_path"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:enabled="false"
+        android:layout_weight="800"
+        android:gravity="center_vertical"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editText_events_prefix"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="800"
+        android:hint="Events Prefix (e.g. MC, MA, DM)"
         android:inputType="text"
         android:minHeight="48dp"
-        android:layout_weight="800"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageButton
         android:id="@+id/button_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:backgroundTint="@color/design_default_color_primary"
         android:minHeight="48dp"
         app:srcCompat="@drawable/ic_delete"
-        android:layout_weight="2"
         tools:ignore="SpeakableTextPresentCheck" />
 
 

@@ -2,23 +2,25 @@ package com.example.calendarplease;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import org.apache.poi.xwpf.usermodel.XWPFTable;
-import org.apache.poi.xwpf.usermodel.XWPFTableCell;
-import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
+import biweekly.Biweekly;
+import biweekly.ICalendar;
 import biweekly.component.VEvent;
 
 public class NewCalendarActivity extends AppCompatActivity {
@@ -40,11 +42,42 @@ public class NewCalendarActivity extends AppCompatActivity {
 
         ImageButton buttonNext = findViewById(R.id.button_next);
         buttonNext.setOnClickListener(v -> {
-            SecondStepFragment secondStepFragment = SecondStepFragment.newInstance(schoolCalendar.getSyllabusDocumentList());
-            FragmentManager fragmentManager2 = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction2 = fragmentManager2.beginTransaction();
-            fragmentTransaction2.replace(R.id.fragment_container, secondStepFragment).commit();
+            Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
+            if (currentFragment.getClass() == FirstStepFragment.class) {
+                if (schoolCalendar.getSyllabusDocumentList().size() > 0 && schoolCalendar.getSyllabusDocumentList() != null) {
+                    SecondStepFragment secondStepFragment = SecondStepFragment.newInstance(schoolCalendar.getSyllabusDocumentList());
+                    FragmentTransaction fragmentTransaction2 = fragmentManager.beginTransaction();
+                    fragmentTransaction2.replace(R.id.fragment_container, secondStepFragment).commit();
+                } else {
+                    Snackbar.make(this, v, getString(R.string.syllabus_required_msg), BaseTransientBottomBar.LENGTH_SHORT)
+                            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                            .show();
+                }
 
+            } else if (currentFragment.getClass() == SecondStepFragment.class) {
+                List<VEvent> events = schoolCalendar.generateEvents();
+                List<VEvent> weekTagEvents = schoolCalendar.generateWeekTagEvents();
+
+                ICalendar iCalendar = new ICalendar();
+                for (VEvent e : events) {
+                    iCalendar.addEvent(e);
+                }
+                for (VEvent e : weekTagEvents) {
+                    iCalendar.addEvent(e);
+                }
+                FileOutputStream fileOutputStream = null;
+                try {
+                    String calendarName = schoolCalendar.getTitle();
+                    String filename = (!TextUtils.isEmpty(calendarName)) ? calendarName : "Calendar" + schoolCalendar.getSchoolStartDate().getTimeInMillis();
+                    fileOutputStream = openFileOutput(filename + ".ics", MODE_PRIVATE);
+                    Biweekly.write(iCalendar).go(fileOutputStream);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                finish();
+
+            }
 //            if (this.uploadedFilesPathList.size() != 0) {
 //                List<VEvent> schoolEvents = new ArrayList<>();
 //                for (ParcelFileDescriptor p : fileDescriptors) {
@@ -89,18 +122,12 @@ public class NewCalendarActivity extends AppCompatActivity {
                 if (!isPathExist(filePath)) {
                     SyllabusDocument syllabusDocument = new SyllabusDocument();
                     syllabusDocument.setPath(filePath);
-                    syllabusDocument.uri = data.getData();
+                    syllabusDocument.setUri(data.getData());
+                    syllabusDocument.setContentResolver(getContentResolver());
                     schoolCalendar.getSyllabusDocumentList().add(syllabusDocument);
                     int size = schoolCalendar.getSyllabusDocumentList().size();
                     firstStepFragment.getRecyclerView().getAdapter().notifyItemInserted(size);
                     firstStepFragment.getRecyclerView().smoothScrollToPosition(size);
-
-//                    try {
-//                        ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(data.getData(), "r");
-//                        Log.d("meow2", "================" + getContentResolver().toString());
-//                    } catch (FileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
                 }
             }
         }
@@ -117,70 +144,6 @@ public class NewCalendarActivity extends AppCompatActivity {
         }
         return false;
     }
-
-    private XWPFTable getWeekCourseOutlineTable(List<XWPFTable> tables) {
-        XWPFTable weekCourseOutlineTable = null;
-        for (XWPFTable table : tables) {
-            XWPFTableRow headerRow = table.getRows().get(0);
-            XWPFTableCell firstCell = headerRow.getCell(0);
-            XWPFTableCell secondCell = headerRow.getCell(1);
-            if (firstCell.getText().trim().toLowerCase().contains("week")
-                    && secondCell.getText().trim().toLowerCase().contains("date")) {
-                weekCourseOutlineTable = table;
-                break;
-            }
-        }
-        return weekCourseOutlineTable;
-    }
-
-    private List<VEvent> getSchoolEvents(XWPFTable table, int[] columnsIndex) {
-        List<VEvent> events = new ArrayList<>();
-
-//        int weekNumber = 1;
-//        for (XWPFTableRow row : table.getRows()) {
-//            XWPFTableCell weekCell = row.getCell(0);
-//
-//            // Redundant WeekTag when bulk upload :"(
-//            VEvent weekTag = null;
-//            if (weekCell != null && !weekCell.getText().equals("")) {
-//                weekNumber = Integer.parseInt(weekCell.getText());
-//                weekTag = new VEvent();
-//                weekTag.setSummary("Week#" + weekNumber);
-//            }
-//
-//            Calendar rowStartDate = (Calendar) schoolStartDate.clone();
-//            int currentDayOfWeek = rowStartDate.get(Calendar.DAY_OF_WEEK);
-//            if (weekNumber != 1)
-//                rowStartDate.add(Calendar.DAY_OF_MONTH, ((7 * (weekNumber - 1))) - (currentDayOfWeek - 1));
-//
-//            Calendar rowEndDate = (Calendar) rowStartDate.clone();
-//            currentDayOfWeek = rowEndDate.get(Calendar.DAY_OF_WEEK);
-//            rowEndDate.add(Calendar.DAY_OF_WEEK, (5 - (currentDayOfWeek - 1)));
-//
-//            if (weekTag != null) {
-//                weekTag.setDateStart(rowStartDate.getTime(), false);
-//                weekTag.setDateEnd(rowEndDate.getTime(), false);
-//                events.add(weekTag);
-//            }
-//
-//            for (int i : columnsIndex) {
-//                XWPFTableCell currentCell = row.getCell(i);
-//                if (currentCell != null) {
-//                    String title = row.getCell(i).getText();
-//                    if (!title.equals("")) {
-//                        VEvent event = new VEvent();
-//                        event.setSummary(title);
-//                        event.setDateStart(rowStartDate.getTime(), false);
-//                        event.setDateEnd(rowEndDate.getTime(), false);
-//                        events.add(event);
-//                    }
-//                }
-//            }
-//        }
-        return events;
-    }
-
-
 }
 
 

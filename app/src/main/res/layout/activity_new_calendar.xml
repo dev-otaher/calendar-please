@@ -27,7 +27,6 @@
         android:backgroundTint="@color/design_default_color_primary"
         android:minHeight="48dp"
         android:src="@drawable/ic_next"
-        android:text="@string/run"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

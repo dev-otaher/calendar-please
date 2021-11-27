@@ -11,9 +11,4 @@
         android:text="File Name"
         android:id="@+id/column_title"/>
 
-    <androidx.appcompat.widget.AppCompatCheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Column Title" />
-
 </androidx.appcompat.widget.LinearLayoutCompat>

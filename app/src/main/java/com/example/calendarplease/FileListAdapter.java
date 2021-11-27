@@ -1,9 +1,8 @@
 package com.example.calendarplease;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.ParcelFileDescriptor;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileViewHolder> {
@@ -38,7 +34,24 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileVi
 
     @Override
     public void onBindViewHolder(@NonNull FileListAdapter.FileViewHolder holder, int position) {
-        holder.editTextFilePath.setText(mSyllabusDocumentList.get(position).getFileName());
+        SyllabusDocument currentSyllabus = mSyllabusDocumentList.get(position);
+        holder.textViewFilePath.setText(currentSyllabus.getFileName());
+        holder.editTextPrefix.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                currentSyllabus.setEventPrefix(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         holder.buttonDelete.setOnClickListener(v -> {
             int index = holder.getAdapterPosition();
             mSyllabusDocumentList.remove(index);
@@ -46,20 +59,24 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileVi
         });
     }
 
+
+
     @Override
     public int getItemCount() {
         return mSyllabusDocumentList.size();
     }
 
     class FileViewHolder extends RecyclerView.ViewHolder {
-        public final EditText editTextFilePath;
+        public final TextView textViewFilePath;
         public final ImageButton buttonDelete;
+        public final EditText editTextPrefix;
         final FileListAdapter mAdapter;
 
         public FileViewHolder(View itemView, FileListAdapter adapter) {
             super(itemView);
-            editTextFilePath = itemView.findViewById(R.id.editText_file_path);
+            textViewFilePath = itemView.findViewById(R.id.textView_file_path);
             buttonDelete = itemView.findViewById(R.id.button_delete);
+            editTextPrefix = itemView.findViewById(R.id.editText_events_prefix);
             this.mAdapter = adapter;
         }
 
