@@ -1,9 +1,12 @@
 package com.example.calendarplease;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,12 +36,14 @@ public class AvailableColumnsAdapter extends RecyclerView.Adapter<AvailableColum
 
     @Override
     public void onBindViewHolder(@NonNull SyllabusColumnViewHolder holder, int position) {
-//        Log.d("meow", "onBindViewHolder");
         SyllabusDocument currentSyllabus = mSyllabusDocumentList.get(position);
-        new FetchAvailableColumns(mContext, currentSyllabus, holder).execute(currentSyllabus.createParcelFileDescriptor());
+        if (currentSyllabus.getAvailableColumnsIndex() == null)
+            new FetchAvailableColumns(mContext, currentSyllabus, holder).execute(currentSyllabus.createParcelFileDescriptor());
         holder.columnTitleTextView.setText(currentSyllabus.getFileName());
 
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -46,15 +51,17 @@ public class AvailableColumnsAdapter extends RecyclerView.Adapter<AvailableColum
     }
 
     class SyllabusColumnViewHolder extends RecyclerView.ViewHolder {
+        final AvailableColumnsAdapter mAdapter;
         public final LinearLayoutCompat linearLayout;
         public final TextView columnTitleTextView;
-        final AvailableColumnsAdapter mAdapter;
+        public final ProgressBar progressBar;
 
         public SyllabusColumnViewHolder(View itemView, AvailableColumnsAdapter adapter) {
             super(itemView);
+            mAdapter = adapter;
             linearLayout = (LinearLayoutCompat) itemView;
             columnTitleTextView = linearLayout.findViewById(R.id.column_title);
-            mAdapter = adapter;
+            progressBar = linearLayout.findViewById(R.id.progress_bar);
         }
     }
 }

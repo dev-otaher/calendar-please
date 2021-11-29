@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
 
@@ -60,8 +61,11 @@ public class FetchAvailableColumns extends AsyncTask<ParcelFileDescriptor, Void,
                 else
                     mSyllabusDocument.get().getPrefColumnsIndex().remove(index);
             });
-            mViewHolder.get().linearLayout.addView(checkBox);
+            if (mViewHolder.get() != null)
+                mViewHolder.get().linearLayout.addView(checkBox);
         });
+        if (mViewHolder.get() != null)
+            mViewHolder.get().progressBar.setVisibility(View.INVISIBLE);
     }
 
     private XWPFTable fetchWcoTable(ParcelFileDescriptor parcelFileDescriptor) {

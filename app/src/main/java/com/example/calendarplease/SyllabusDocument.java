@@ -3,7 +3,6 @@ package com.example.calendarplease;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
@@ -116,41 +115,23 @@ public class SyllabusDocument {
         return parcelFileDescriptor;
     }
 
-    public void fetchAvailableColumns() {
-//        new FetchAvailableColumns(this).execute(createParcelFileDescriptor());
-//        try {
-//        FileInputStream inputStream = new FileInputStream(fileDescriptor.getFileDescriptor());
-//            XWPFDocument xwpfDocument = new XWPFDocument(inputStream);
-//            for (XWPFTable table : xwpfDocument.getTables()) {
-//                XWPFTableRow headerRow = table.getRows().get(0);
-//                XWPFTableCell firstCell = headerRow.getCell(0);
-//                XWPFTableCell secondCell = headerRow.getCell(1);
-//                if (firstCell.getText().trim().toLowerCase().contains("week")
-//                        && secondCell.getText().trim().toLowerCase().contains("date")) {
-//                    wcoTable = table;
-//                    break;
-//                }
-//            }
-//            inputStream.close();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
-
     public List<VEvent> generateEvents(Calendar schoolStartDate) {
         List<VEvent> events = new ArrayList<>();
 
         if (prefColumnsIndex.size() == 0) return events;
-        if (wcoTable == null) Log.d("meow", "wcotable == null");;
+        if (wcoTable == null) return events;
 
         int weekNumber = 1;
         for (XWPFTableRow row : this.wcoTable.getRows()) {
-            // skip first row aka table's header row
             if (row.getCell(0).getText().trim().equalsIgnoreCase("week")) continue;
             XWPFTableCell weekCell = row.getCell(0);
 
             if (weekCell != null && !weekCell.getText().equals("")) {
-                weekNumber = Integer.parseInt(weekCell.getText());
+                try {
+                    weekNumber = Integer.parseInt(weekCell.getText());
+                } catch (NumberFormatException e) {
+                    continue;
+                }
                 maxWeekNumber = weekNumber;
             }
 

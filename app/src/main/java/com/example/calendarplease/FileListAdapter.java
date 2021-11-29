@@ -3,7 +3,6 @@ package com.example.calendarplease;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileVi
     @Override
     public void onBindViewHolder(@NonNull FileListAdapter.FileViewHolder holder, int position) {
         SyllabusDocument currentSyllabus = mSyllabusDocumentList.get(position);
-        holder.textViewFilePath.setText(currentSyllabus.getFileName());
+        holder.textViewFilePath.setText(position + ") " + currentSyllabus.getFileName());
         holder.editTextPrefix.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
