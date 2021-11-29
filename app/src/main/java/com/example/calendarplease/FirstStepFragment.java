@@ -3,6 +3,8 @@ package com.example.calendarplease;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +58,22 @@ public class FirstStepFragment extends Fragment {
 
         mCalendarName = root.findViewById(R.id.editText_calendar_name);
         mCalendarName.setText(mSchoolCalendar.getTitle());
+        mCalendarName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                mSchoolCalendar.setTitle(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         mStartDate = root.findViewById(R.id.editText_start_date);
         mStartDate.setText(new SimpleDateFormat("dd/MM/y", Locale.getDefault()).format(mSchoolCalendar.getSchoolStartDate().getTime()));
@@ -76,7 +94,7 @@ public class FirstStepFragment extends Fragment {
             Intent intent = new Intent();
             intent.setType("application/vnd.openxmlformats-officedocument.wordprocessingml.document");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
             getActivity().startActivityForResult(intent, BROWSE_DOC_REQUEST);
         });
 
@@ -86,12 +104,6 @@ public class FirstStepFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return root;
-    }
-
-    @Override
-    public void onDestroyView() {
-        mSchoolCalendar.setTitle(mCalendarName.getText().toString());
-        super.onDestroyView();
     }
 
     public RecyclerView getRecyclerView() {

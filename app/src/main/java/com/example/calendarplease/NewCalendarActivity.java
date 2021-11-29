@@ -1,9 +1,9 @@
 package com.example.calendarplease;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import biweekly.Biweekly;
@@ -68,7 +69,7 @@ public class NewCalendarActivity extends AppCompatActivity {
                 FileOutputStream fileOutputStream = null;
                 try {
                     String calendarName = schoolCalendar.getTitle();
-                    String filename = (!TextUtils.isEmpty(calendarName)) ? calendarName : "Calendar" + schoolCalendar.getSchoolStartDate().getTimeInMillis();
+                    String filename = (!TextUtils.isEmpty(calendarName)) ? calendarName : "Calendar" + Calendar.getInstance().getTimeInMillis();
                     fileOutputStream = openFileOutput(filename + ".ics", MODE_PRIVATE);
                     Biweekly.write(iCalendar).go(fileOutputStream);
                 } catch (IOException e) {
@@ -78,39 +79,7 @@ public class NewCalendarActivity extends AppCompatActivity {
                 finish();
 
             }
-//            if (this.uploadedFilesPathList.size() != 0) {
-//                List<VEvent> schoolEvents = new ArrayList<>();
-//                for (ParcelFileDescriptor p : fileDescriptors) {
-//                    try {
-//                        FileInputStream fileInputStream = new FileInputStream(p.getFileDescriptor());
-//                        XWPFDocument xwpfDocument = new XWPFDocument(fileInputStream);
-//                        XWPFTable weekCourseOutlineTable = getWeekCourseOutlineTable(xwpfDocument.getTables());
-//                        fileInputStream.close();
-//
-//                        if (weekCourseOutlineTable == null)
-//                            throw new NullPointerException("NO TABLE FOUND!");
-//
-//                        weekCourseOutlineTable.removeRow(0);
-//                        schoolEvents.addAll(getSchoolEvents(weekCourseOutlineTable, new int[]{4, 5}));
-//                    } catch (IOException e) {
-//                        Log.d("meow", e.getMessage());
-//                        e.printStackTrace();
-//                    }
-//                }
-//                ICalendar iCalendar = new ICalendar();
-//                for (VEvent e : schoolEvents) {
-//                    iCalendar.addEvent(e);
-//                }
-//                FileOutputStream fileOutputStream = null;
-//                try {
-//                    String calendarName = mCalendarName.getText().toString();
-//                    String filename = (!calendarName.equals("")) ? calendarName : String.valueOf(schoolStartDate.getTimeInMillis());
-//                    fileOutputStream = openFileOutput(filename + ".ics", MODE_PRIVATE);
-//                    Biweekly.write(iCalendar).go(fileOutputStream);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
+
         });
     }
 
@@ -118,16 +87,36 @@ public class NewCalendarActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == FirstStepFragment.BROWSE_DOC_REQUEST) {
             if (resultCode == RESULT_OK) {
-                String filePath = data.getData().getPath();
-                if (!isPathExist(filePath)) {
-                    SyllabusDocument syllabusDocument = new SyllabusDocument();
-                    syllabusDocument.setPath(filePath);
-                    syllabusDocument.setUri(data.getData());
-                    syllabusDocument.setContentResolver(getContentResolver());
-                    schoolCalendar.getSyllabusDocumentList().add(syllabusDocument);
-                    int size = schoolCalendar.getSyllabusDocumentList().size();
-                    firstStepFragment.getRecyclerView().getAdapter().notifyItemInserted(size);
-                    firstStepFragment.getRecyclerView().smoothScrollToPosition(size);
+                if (data.getData() != null) {
+                    String filePath = data.getData().getPath();
+                    if (!isPathExist(filePath)) {
+                        SyllabusDocument syllabusDocument = new SyllabusDocument();
+                        syllabusDocument.setPath(filePath);
+                        syllabusDocument.setUri(data.getData());
+                        syllabusDocument.setContentResolver(getContentResolver());
+                        schoolCalendar.getSyllabusDocumentList().add(syllabusDocument);
+                        int size = schoolCalendar.getSyllabusDocumentList().size();
+                        firstStepFragment.getRecyclerView().getAdapter().notifyItemInserted(size);
+                        firstStepFragment.getRecyclerView().smoothScrollToPosition(size);
+                    }
+                } else {
+                    ClipData clipData = data.getClipData();
+                    if (clipData != null) {
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
+                            ClipData.Item item = clipData.getItemAt(i);
+                            String filePath = item.getUri().getPath();
+                            if (!isPathExist(filePath)) {
+                                SyllabusDocument syllabusDocument = new SyllabusDocument();
+                                syllabusDocument.setPath(filePath);
+                                syllabusDocument.setUri(item.getUri());
+                                syllabusDocument.setContentResolver(getContentResolver());
+                                schoolCalendar.getSyllabusDocumentList().add(syllabusDocument);
+                                int size = schoolCalendar.getSyllabusDocumentList().size();
+                                firstStepFragment.getRecyclerView().getAdapter().notifyItemInserted(size);
+                                firstStepFragment.getRecyclerView().smoothScrollToPosition(size);
+                            }
+                        }
+                    }
                 }
             }
         }
