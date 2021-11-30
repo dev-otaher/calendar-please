@@ -17,7 +17,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Calendar;
 import java.util.List;
 
 import biweekly.Biweekly;
@@ -44,18 +43,26 @@ public class NewCalendarActivity extends AppCompatActivity {
         ImageButton buttonNext = findViewById(R.id.button_next);
         buttonNext.setOnClickListener(v -> {
             Fragment currentFragment = fragmentManager.findFragmentById(R.id.fragment_container);
-            if (currentFragment.getClass() == FirstStepFragment.class) {
-                if (schoolCalendar.getSyllabusDocumentList().size() > 0 && schoolCalendar.getSyllabusDocumentList() != null) {
+            if (currentFragment != null && currentFragment.getClass() == FirstStepFragment.class) {
+                if (TextUtils.isEmpty(schoolCalendar.getTitle())) {
+                    Snackbar.make(this, v, getString(R.string.calendar_name_required), BaseTransientBottomBar.LENGTH_LONG)
+                            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                            .show();
+                } else if (schoolCalendar.getSyllabusDocumentList() == null || schoolCalendar.getSyllabusDocumentList().size() == 0) {
+                    Snackbar.make(this, v, getString(R.string.syllabus_required_msg), BaseTransientBottomBar.LENGTH_LONG)
+                            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                            .show();
+                } else if (!isAllEventPrefixExists(schoolCalendar.getSyllabusDocumentList())) {
+                    Snackbar.make(this, v, getString(R.string.events_prefix_missing), BaseTransientBottomBar.LENGTH_LONG)
+                            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                            .show();
+                } else {
                     SecondStepFragment secondStepFragment = SecondStepFragment.newInstance(schoolCalendar.getSyllabusDocumentList());
                     FragmentTransaction fragmentTransaction2 = fragmentManager.beginTransaction();
                     fragmentTransaction2.replace(R.id.fragment_container, secondStepFragment).commit();
-                } else {
-                    Snackbar.make(this, v, getString(R.string.syllabus_required_msg), BaseTransientBottomBar.LENGTH_SHORT)
-                            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
-                            .show();
                 }
 
-            } else if (currentFragment.getClass() == SecondStepFragment.class) {
+            } else if (currentFragment != null && currentFragment.getClass() == SecondStepFragment.class) {
                 List<VEvent> events = schoolCalendar.generateEvents();
                 List<VEvent> weekTagEvents = schoolCalendar.generateWeekTagEvents();
 
@@ -66,20 +73,19 @@ public class NewCalendarActivity extends AppCompatActivity {
                 for (VEvent e : weekTagEvents) {
                     iCalendar.addEvent(e);
                 }
-                FileOutputStream fileOutputStream = null;
                 try {
-                    String calendarName = schoolCalendar.getTitle();
-                    String filename = (!TextUtils.isEmpty(calendarName)) ? calendarName : "Calendar" + Calendar.getInstance().getTimeInMillis();
-                    fileOutputStream = openFileOutput(filename + ".ics", MODE_PRIVATE);
+                    String calendarTitle = schoolCalendar.getTitle() ;
+                    FileOutputStream fileOutputStream = openFileOutput(calendarTitle + ".ics", MODE_PRIVATE);
                     Biweekly.write(iCalendar).go(fileOutputStream);
+                    new DbHelper(this).addCalendarName(calendarTitle);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    Snackbar.make(this, v, "Saving events to ics file failed!", BaseTransientBottomBar.LENGTH_LONG)
+                            .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_SLIDE)
+                            .show();
                 }
-
                 finish();
-
             }
-
         });
     }
 
@@ -132,6 +138,14 @@ public class NewCalendarActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private boolean isAllEventPrefixExists(List<SyllabusDocument> documents) {
+        for (SyllabusDocument doc :
+                documents) {
+            if (TextUtils.isEmpty(doc.getEventPrefix())) return false;
+        }
+        return true;
     }
 }
 

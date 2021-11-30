@@ -9,5 +9,8 @@
     <string name="cal_name_placeholder">Calendar%1$d</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="syllabus_required_msg">At least one syllabus is required...</string>
+    <string name="syllabus_required_msg">At least one syllabus is required!</string>
+    <string name="calendar_name_required">Calendar name is required!</string>
+    <string name="events_prefix_missing">One or more events prefix is missing!</string>
+    <string name="no_calendars">No Calendars...</string>
 </resources>

@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/activity_main.xml" value="0.334375" />
+        <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/activity_main.xml" value="0.75" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/activity_new_calendar.xml" value="0.334375" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/available_columns_item.xml" value="0.334375" />
+        <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/calendarlist_item.xml" value="0.334375" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/columnlist_card.xml" value="0.334375" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/columnlist_item.xml" value="0.5" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/filelist_item.xml" value="0.3494791666666667" />

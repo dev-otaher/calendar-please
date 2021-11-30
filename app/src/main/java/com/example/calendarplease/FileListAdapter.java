@@ -35,7 +35,7 @@ public class FileListAdapter extends RecyclerView.Adapter<FileListAdapter.FileVi
     @Override
     public void onBindViewHolder(@NonNull FileListAdapter.FileViewHolder holder, int position) {
         SyllabusDocument currentSyllabus = mSyllabusDocumentList.get(position);
-        holder.textViewFilePath.setText(position + ") " + currentSyllabus.getFileName());
+        holder.textViewFilePath.setText(currentSyllabus.getFileName());
         holder.editTextPrefix.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
