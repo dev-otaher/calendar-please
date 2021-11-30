@@ -3,7 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/activity_main.xml" value="0.75" />
+        <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/activity_new_calendar.xml" value="0.334375" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/available_columns_item.xml" value="0.334375" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/calendarlist_item.xml" value="0.334375" />
@@ -14,6 +14,7 @@
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/fragment_item.xml" value="0.334375" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/fragment_item_list.xml" value="0.31666666666666665" />
         <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/layout/fragment_second_step.xml" value="0.334375" />
+        <entry key="..\:/Users/O.T/Desktop/Android/CalendarPlease/app/src/main/res/menu/menu_context.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.19791666666666666" />
         <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.3546875" />
         <entry key="..\:/Users/O.T/Desktop/CalendarPlease/app/src/main/res/drawable/ic_calendar.xml" value="0.3546875" />
